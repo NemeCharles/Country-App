@@ -586,6 +586,54 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               value: item.region!,
             )).toList(),
           ),
+          // SizedBox(height: 7,),
+          Padding(
+            padding: const EdgeInsets.only(left: 18, right: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: null,
+                  child: const Text(
+                      'Reset',
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.white
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 0.8, color: Color(0XFFA9BBD4))),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)
+                      )
+                    ),
+                    minimumSize: MaterialStateProperty.all<Size>(const Size(85, 40))
+                  ),
+                ),
+                TextButton(
+                  onPressed: null,
+                  child: const Text(
+                      'Reset',
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.white
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 0.8, color: Color(0XFFA9BBD4))),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)
+                      )
+                    ),
+                    minimumSize: MaterialStateProperty.all<Size>(const Size(170, 40))
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 17,)
         ],
       ),
     );
