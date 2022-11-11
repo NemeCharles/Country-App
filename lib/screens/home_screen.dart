@@ -509,7 +509,7 @@ List<Items> items = [
           );
         },
       ),
-      'Continents'
+      'Time zones'
   ),
 
 
