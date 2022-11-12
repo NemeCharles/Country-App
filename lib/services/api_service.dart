@@ -17,23 +17,6 @@ class ApiServices {
           }
         }
       }
-      print(_countryList[0].subregion);
-      print(_countryList[0].flag.runtimeType);
-      print(_countryList[0].coatOfArm);
-      print(_countryList[162].callingCodeRoot.runtimeType);
-      print(_countryList[162].callingCodeSuffix.runtimeType);
-      print(_countryList[0].region);
-      print(_countryList[8].name);
-      print(_countryList[8].capital);
-      print(_countryList[0].language!.values.first);
-      print(_countryList[0].area);
-      print(_countryList[0].currency);
-      print(_countryList[0].timeZone![0]);
-      print(_countryList[0].population);
-      print(_countryList[0].drivingSide);
-      print(_countryList[162].independence);
-      print(_countryList[162].independence.runtimeType);
-      print(_countryList.length);
       return _countryList;
     } else{ throw Exception('Unable to load the stuff');}
   }
