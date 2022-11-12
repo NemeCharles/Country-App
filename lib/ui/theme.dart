@@ -6,17 +6,33 @@ class Themes {
 
   // 98A2B3  F2F4F7
   static final darkMode = ThemeData(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0XFF000F24),
       scaffoldBackgroundColor: const Color(0XFF000F24),
       primaryColor: Colors.black,
-      brightness: Brightness.dark
+      brightness: Brightness.dark,
+      checkboxTheme: CheckboxThemeData(
+          fillColor: MaterialStateProperty.all<Color>(const Color(0XFFF2F4F7)),
+          checkColor: MaterialStateProperty.all<Color>(const Color(0XFF000F24)),
+      ),
+    radioTheme: RadioThemeData(
+      fillColor: MaterialStateProperty.all<Color>(const Color(0XFFF2F4F7)),
+
+    )
   );
 
   static final lightMode = ThemeData(
-      backgroundColor: Colors.white,
-      scaffoldBackgroundColor: const Color(0XFFFFFFFF),
+      backgroundColor: const Color(0XFFE5E5E5),
+      scaffoldBackgroundColor: const Color(0XFFE5E5E5),
       primaryColor: Colors.white,
-      brightness: Brightness.light
+      brightness: Brightness.light,
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.all<Color>(const Color(0XFF1C1917)),
+        checkColor: MaterialStateProperty.all<Color>(const Color(0XFFE5E5E5))
+      ),
+    radioTheme: RadioThemeData(
+      fillColor: MaterialStateProperty.all<Color>(const Color(0XFF001637)),
+
+    )
   );
 
 }
