@@ -1,11 +1,12 @@
-import 'package:country_app/model/country_model.dart';
-import 'package:country_app/screens/info_screen.dart';
 import 'package:country_app/services/api_service.dart';
 import 'package:country_app/services/controller.dart';
+import 'package:country_app/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../ui/components.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,10 +18,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final CountryController _countryController = Get.put(CountryController());
   final countryLoad = ApiServices();
-
-  void call() async {
-    await countryLoad.fetchCountries();
-  }
 
   @override
   void initState() {
@@ -60,6 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            ThemeServices().toggleTheme();
+                          });
+                        },
                         child: Icon(
                             Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round
                         ),
@@ -116,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                  color: Color(0XFFA9BBD4),
+                                  color: Get.isDarkMode ? const Color(0XFFA9B8D4) : const Color(0XFFA9BBD4),
                                   width: 0.8
                               )
                           ),
@@ -137,7 +139,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          print(continents[1]);
                           showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
@@ -151,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                  color: const Color(0XFFA9BBD4),
+                                  color: Get.isDarkMode ? const Color(0XFFA9BBD4) : const Color(0XFFA9B8D4),
                                   width: 0.8
                               )
                           ),
@@ -175,58 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 15,),
                   Expanded(
                     child: countryTile(_countryController.displayList)
-                    // ListView.builder(
-                    //     itemCount: _countryController.displayList.length,
-                    //     itemBuilder: (context, index) {
-                    //       return Padding(
-                    //         padding: const EdgeInsets.symmetric(vertical: 6.0),
-                    //         child: SizedBox(
-                    //           height: 50,
-                    //           child: GestureDetector(
-                    //             onTap: () {
-                    //               Get.to(() => InfoScreen(
-                    //                 index: index,
-                    //                 countryName: _countryController.displayList[index].name!
-                    //               ));
-                    //             },
-                    //             child: Row(
-                    //               crossAxisAlignment: CrossAxisAlignment.center,
-                    //               children: [
-                    //                 Container(
-                    //                   height: 45,
-                    //                   width: 45,
-                    //                   decoration: BoxDecoration(
-                    //                       borderRadius: BorderRadius.circular(12),
-                    //                       color: Colors.red
-                    //                   ),
-                    //                 ),
-                    //                 const SizedBox(width: 15,),
-                    //                 Column(
-                    //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //                   crossAxisAlignment: CrossAxisAlignment.start,
-                    //                   children: [
-                    //                     Text(
-                    //                       _countryController.displayList[index].name!,
-                    //                       style: const TextStyle(
-                    //                           fontSize: 17,
-                    //                           fontWeight: FontWeight.w500
-                    //                       ),
-                    //                     ),
-                    //                     Text(
-                    //                       _countryController.displayList[index].capital!,
-                    //                       style: const TextStyle(
-                    //                         fontSize: 15,
-                    //                         fontWeight: FontWeight.w300,
-                    //                       ),
-                    //                     )
-                    //                   ],
-                    //                 )
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       );
-                    //     }),
                   ),
                 ],
               ),
@@ -238,64 +187,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget countryTile(List<Country> countryList) {
-  return ListView.builder(
-      itemCount: countryList.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6.0),
-          child: SizedBox(
-            height: 50,
-            child: GestureDetector(
-              onTap: () {
-                Get.to(() => InfoScreen(
-                    index: index,
-                    countryName: countryList[index].name!
-                ));
-              },
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 45,
-                    width: 45,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        // color: Colors.red,
-                      image: DecorationImage(
-                        image: NetworkImage(countryList[index].flag.toString()),
-                        fit: BoxFit.cover
-                      )
-                    ),
-                  ),
-                  const SizedBox(width: 15,),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        countryList[index].name!,
-                        style: const TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500
-                        ),
-                      ),
-                      Text(
-                        countryList[index].capital![0],
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      });
-}
 
 class LanguageList extends StatefulWidget {
   const LanguageList({Key? key}) : super(key: key);
@@ -303,16 +194,24 @@ class LanguageList extends StatefulWidget {
   @override
   State<LanguageList> createState() => _LanguageListState();
 }
-
+List<String> languages = [
+  'English',
+  'Deutsch',
+  'Francais',
+  'Español',
+  'Italiano',
+  'portuguese',
+  'Svenska'
+];
 class _LanguageListState extends State<LanguageList> {
-  int selectedValue = 1;
+  int selectedValue = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 20, right: 18, left: 18),
-      decoration: const BoxDecoration(
-          color: Color(0XFF000F24),
-          borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+          color: Get.isDarkMode ? const Color(0XFF000F24) : const Color(0XFFE5E5E5),
+          borderRadius: const BorderRadius.only(
               topRight: Radius.circular(20),
               topLeft: Radius.circular(20)
           )
@@ -347,23 +246,23 @@ class _LanguageListState extends State<LanguageList> {
             ],
           ),
           SizedBox(height: 10,),
-          SizedBox(
-            height: 200,
-            child: ListView(
-              children: [
-                Padding(
+          Flexible(
+            child: ListView.builder(
+              itemCount: languages.length,
+              itemBuilder: (context, index) {
+                return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 3.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'English',
+                        languages[index],
                         style: TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       Radio<int>(
-                        value: 1,
+                        value: index,
                         groupValue: selectedValue,
                         onChanged: (value) {
                           setState(() {
@@ -374,32 +273,8 @@ class _LanguageListState extends State<LanguageList> {
                       )
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'English',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                      Radio<int>(
-                        value: 2,
-                        groupValue: selectedValue,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedValue = value!;
-                            print(value);
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                ),
-              ],
+                );
+              },
             ),
           )
         ],
@@ -493,15 +368,13 @@ List<Items> items = [
                     timeZones[index],
                     style: const TextStyle(
                       fontSize: 17,
-                      fontWeight: FontWeight.w300
+                      fontWeight: FontWeight.w300,
                     ),
                   ),
                   // Text('data')
                   Checkbox(
                     value: false,
                     onChanged: null,
-                    fillColor: MaterialStateProperty.all<Color>(Colors.white),
-                    checkColor: Color(0XFF000F24),
                   )
                 ],
               ),
@@ -511,9 +384,6 @@ List<Items> items = [
       ),
       'Time zones'
   ),
-
-
-  // Items('Hello', 'Time zone')
 ];
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
@@ -521,9 +391,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(
-          color: Color(0XFF000F24),
-          borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+          color: Get.isDarkMode ? const Color(0XFF000F24) : const Color(0XFFE5E5E5),
+          borderRadius: const BorderRadius.only(
               topRight: Radius.circular(20),
               topLeft: Radius.circular(20)
           )
@@ -621,13 +491,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     ),
                   ),
                   style: ButtonStyle(
-                    side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 0.8, color: Color(0XFFA9BBD4))),
+                    side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 0.8, color: Color(0XFFFF6C00))),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)
                       )
                     ),
-                    minimumSize: MaterialStateProperty.all<Size>(const Size(170, 40))
+                    minimumSize: MaterialStateProperty.all<Size>(const Size(170, 40)),
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0XFFFF6C00))
                   ),
                 ),
               ],
@@ -641,34 +512,3 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 }
 
 
-class ErrorMessage extends StatelessWidget {
-  const ErrorMessage({Key? key, required this.onPressed}) : super(key: key);
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Align(
-          alignment: Alignment.center,
-          child: Text('An error occurred',
-            style: TextStyle(
-                fontSize: 18
-            ),
-          ),
-        ),
-        const SizedBox(height: 10,),
-        TextButton(
-          onPressed: onPressed,
-          child: const Text('Try Again',
-            style: TextStyle(
-                fontSize: 17
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}

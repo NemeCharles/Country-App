@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../ui/components.dart';
+
 class InfoScreen extends StatelessWidget {
   const InfoScreen({Key? key, required this.index, required this.countryName}) : super(key: key);
   final int index;
@@ -17,11 +19,21 @@ class InfoScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: context.theme.backgroundColor,
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Icon(
+            Icons.arrow_back_rounded,
+            size: 25,
+            color: Get.isDarkMode? const Color(0XFFEAECF0) : const Color(0XFF1C1917),),
+        ),
         title: Text(
           countryName,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 25,
-            fontWeight: FontWeight.w500
+            fontWeight: FontWeight.w500,
+            color: Get.isDarkMode? const Color(0XFFEAECF0) : const Color(0XFF1C1917)
           ),
         ),
       ),
@@ -70,37 +82,3 @@ class InfoScreen extends StatelessWidget {
   }
 }
 
-class DetailTile extends StatelessWidget {
-  const DetailTile({
-    Key? key, required this.title, required this.value,
-  }) : super(key: key);
-
-  final String title;
-  final String value;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        children: [
-          Text(
-            title + ':',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 18
-            ),
-          ),
-          SizedBox(width: 8,),
-          Text(
-            value,
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 18,
-              color: Color(0XFFF2F4F7)
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}

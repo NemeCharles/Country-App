@@ -40,16 +40,24 @@ class Country {
       name: json['name']['official'] ?? 'Unknown',
       capital: json['capital'] ?? <dynamic>['Unknown'],
       population: json['population'] ?? 0,
-      language: json['languages'],
+      language: json['languages'] ?? unknown,
       area: json['area'] ?? 0,
       region: json['region'] ?? 'Unknown',
       subregion: json['subregion'] ?? 'Unknown',
       drivingSide: json['car']['side'] ?? 'Unknown',
       timeZone: json['timezones'] ?? <dynamic>['Unknown'],
-      callingCodeRoot: json['idd']['root'],
+      callingCodeRoot: json['idd']['root'] ?? '',
       callingCodeSuffix: json['idd']['suffixes'] ?? <dynamic>['Unknown'],
-      currency: json['currencies'],
+      currency: json['currencies'] ?? unknownCurrency,
       independence: json['independent']
     );
   }
 }
+
+Map<String, dynamic> unknown = {
+  'name': 'Unknown'
+};
+
+Map<String, dynamic> unknownCurrency = {
+  'unknown': unknown
+};
