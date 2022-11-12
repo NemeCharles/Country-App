@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../model/country_model.dart';
 import '../screens/info_screen.dart';
+import '../services/controller.dart';
 
 class ErrorMessage extends StatelessWidget {
   const ErrorMessage({Key? key, required this.onPressed}) : super(key: key);
@@ -130,5 +131,110 @@ class DetailTile extends StatelessWidget {
     );
   }
 }
+
+class Items {
+  String? region;
+  Widget? text;
+  Items(this.text, this.region);
+}
+List<Items> items = [
+  Items(
+      ContinentFilter(),
+      'Continents'
+  ),
+  Items(
+      ListView.builder(
+        itemCount: timeZones.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 18.0, right: 16),
+            child: Container(
+              // width: 270,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    timeZones[index],
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  // Text('data')
+                  const Checkbox(
+                    value: false,
+                    onChanged: null,
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      'Time zones'
+  ),
+];
+
+class ContinentFilter extends StatelessWidget {
+  const ContinentFilter({
+    Key? key,
+  }) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    final CountryController _controller = Get.find();
+    return GetBuilder<CountryController>(builder: (_){
+      return ListView.builder(
+        itemCount: _controller.continentList.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 18.0, right: 16),
+            child: Container(
+              // width: 270,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    _controller.continentList[index].continent!,
+                    style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w300
+                    ),
+                  ),
+                  Checkbox(
+                    value: _controller.continentList[index].isChecked,
+                    onChanged: (bool? value) {
+                      _controller.toggleCheckBox(index, value!);
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    });
+
+  }
+}
+
+
+List<String> timeZones = [
+  'GMT+1:00',
+  'GMT+2:00',
+  'GMT+3:00',
+  'GMT+4:00',
+  'GMT+5:00',
+  'GMT+6:00',
+  'GMT+7:00',
+  'GMT-6:00',
+  'GMT-5:00',
+  'GMT-4:00',
+  'GMT-3:00',
+  'GMT-2:00',
+  'GMT-1:00',
+];
+
 
 
