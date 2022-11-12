@@ -25,7 +25,3 @@ I would like to add the time zone and region filters and also the language trans
 
 - [APK link](https://flutter.dev/docs/get-started/codelab)
 - [Appetize link](https://appetize.io/app/337rhsiixe2tllxpoycuqjrr3q)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
