@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           showModalBottomSheet(
                               backgroundColor: Colors.transparent,
                               context: context,
-                              builder: (context) => LanguageList());
+                              builder: (context) => const LanguageList());
                         },
                         child: Container(
                           height: 45,
@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
                             context: context,
-                            builder: (context) => FilterBottomSheet()
+                            builder: (context) => const FilterBottomSheet()
                           );
                         },
                         child: Container(
@@ -329,7 +329,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                             borderRadius: BorderRadius.circular(5),
                             color: const Color(0XFF98A2B3)
                         ),
-                        child: Center(child: const FaIcon(FontAwesomeIcons.x, size: 10,))
+                        child: const Center(child: FaIcon(FontAwesomeIcons.x, size: 10,))
                     ),
                   )
                 ],
@@ -366,7 +366,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: null,
+                    onPressed: () {
+                      _controller.resetFilter();
+                      Navigator.pop(context);
+                    },
                     child: const Text(
                         'Reset',
                       style: TextStyle(
@@ -386,11 +389,17 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   ),
                   TextButton(
                     onPressed: () {
-                      var continents = _controller.continentList.where((continent) => continent.isChecked).map((test) => test.continent).toList();
-                      print(continents);
+                      if(_controller.continentList.any((element) => element.isChecked == true)) {
+                        var continents = _controller.continentList.where((continent) =>
+                        continent.isChecked).map((test) => test.continent).toList();
+                        _controller.testingFilter(continents);
+                        Navigator.pop(context);
+                      }else{
+                        print('No continent selected');
+                      }
                     },
                     child: const Text(
-                        'Reset',
+                        'Show results',
                       style: TextStyle(
                         fontSize: 17,
                         color: Colors.white
@@ -410,7 +419,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 ],
               ),
             ),
-            SizedBox(height: 17,)
+            const SizedBox(height: 17,)
           ],
         ),
       );
