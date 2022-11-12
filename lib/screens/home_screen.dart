@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onChanged: (value) {
                         _countryController.searchCountry(value);
                       },
-                      style: TextStyle(
+                      style:const TextStyle(
                           fontSize: 21
                       ),
                       cursorHeight: 21,
@@ -224,7 +224,7 @@ class _LanguageListState extends State<LanguageList> {
               Text(
                 'Languages',
                 style: TextStyle(
-                    fontSize: 27,
+                    fontSize: 20,
                     fontWeight: FontWeight.w700
                 ),
               ),

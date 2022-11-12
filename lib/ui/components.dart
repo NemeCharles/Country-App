@@ -74,14 +74,15 @@ Widget countryTile(List<Country> countryList) {
                         countryList[index].name!,
                         style: const TextStyle(
                             fontSize: 17,
-                            fontWeight: FontWeight.w500
+                            fontWeight: FontWeight.w500,
                         ),
                       ),
                       Text(
                         countryList[index].capital![0],
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w300,
+                          color: Get.isDarkMode ? const Color(0XFF667085) : const Color(0XFF98A2B3)
                         ),
                       )
                     ],
