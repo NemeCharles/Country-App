@@ -14,6 +14,7 @@ class Country {
   List<dynamic>? callingCodeSuffix;
   Map<String,dynamic>? currency;
   bool? independence;
+  dynamic continent;
 
   Country({
     this.flag,
@@ -30,7 +31,8 @@ class Country {
     this.callingCodeSuffix,
     this.timeZone,
     this.currency,
-    this.independence
+    this.independence,
+    this.continent
 });
 
   factory Country.fromJson(Map<String, dynamic> json) {
@@ -49,7 +51,8 @@ class Country {
       callingCodeRoot: json['idd']['root'] ?? '',
       callingCodeSuffix: json['idd']['suffixes'] ?? <dynamic>['Unknown'],
       currency: json['currencies'] ?? unknownCurrency,
-      independence: json['independent']
+      independence: json['independent'],
+      continent: json['continents'][0] ?? 'Unknown'
     );
   }
 }

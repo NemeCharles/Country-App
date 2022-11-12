@@ -36,6 +36,7 @@ class ErrorMessage extends StatelessWidget {
   }
 }
 
+
 Widget countryTile(List<Country> countryList) {
   return ListView.builder(
       itemCount: countryList.length,
@@ -96,6 +97,7 @@ Widget countryTile(List<Country> countryList) {
       });
 }
 
+
 class DetailTile extends StatelessWidget {
   const DetailTile({
     Key? key, required this.title, required this.value,
@@ -132,11 +134,14 @@ class DetailTile extends StatelessWidget {
   }
 }
 
+
 class Items {
   String? region;
   Widget? text;
   Items(this.text, this.region);
 }
+
+
 List<Items> items = [
   Items(
       ContinentFilter(),
@@ -174,6 +179,7 @@ List<Items> items = [
       'Time zones'
   ),
 ];
+
 
 class ContinentFilter extends StatelessWidget {
   const ContinentFilter({

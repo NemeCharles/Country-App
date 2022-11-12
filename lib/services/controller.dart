@@ -41,6 +41,13 @@ class CountryController extends GetxController {
     update();
   }
 
+  void testingFilter(List<String?> selectedContinents) {
+    List<Country> continentLoads = _countryList.
+    where((countries) => selectedContinents.
+    any((country) => countries.continent!.contains(country!))).toList();
+    displayList = continentLoads;
+    update();
+  }
 
 
   void changeBool(bool newValue) {
@@ -50,6 +57,12 @@ class CountryController extends GetxController {
 
   void toggleCheckBox(int index, bool? value) {
     continentList[index].isChecked = value!;
+    update();
+  }
+
+  void resetFilter() {
+    _countryList.sort((a, b) => a.name!.compareTo(b.name!));
+    displayList = _countryList;
     update();
   }
 
