@@ -19,12 +19,14 @@ class CountryController extends GetxController {
 
   void getCountryList() async {
     await callApi();
+    _countryList.sort((a, b) => a.name!.compareTo(b.name!));
     displayList = _countryList;
     update();
   }
 
-  void searchCountry(value) {
-    displayList = _countryList.where((country) => country.name!.toLowerCase().contains(value.toLowerCase())).toList();
+  void searchCountry(String value) {
+    displayList = _countryList.where((country) => country.name!.toLowerCase().contains(value.toLowerCase()) ||
+    country.capital![0].toString().toLowerCase().contains(value.toLowerCase())).toList();
     update();
   }
 
