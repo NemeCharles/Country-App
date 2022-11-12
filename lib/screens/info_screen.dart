@@ -46,12 +46,27 @@ class InfoScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20,),
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(_controller.flag.toString())
-                      )
+                  SizedBox(
+                    height: 210,
+                    child: PageView(
+                      children: [
+                        Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(_controller.flag.toString())
+                              )
+                          ),
+                        ),
+                        Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(_controller.coatOfArm.toString())
+                              )
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 20,),
