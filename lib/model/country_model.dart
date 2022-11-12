@@ -61,3 +61,5 @@ Map<String, dynamic> unknown = {
 Map<String, dynamic> unknownCurrency = {
   'unknown': unknown
 };
+
+

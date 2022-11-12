@@ -3,7 +3,6 @@ import 'package:country_app/services/controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../ui/components.dart';
 
 class InfoScreen extends StatelessWidget {
@@ -76,15 +75,17 @@ class InfoScreen extends StatelessWidget {
                   const DetailTile(title: 'Motto', value: 'Unknown'),
                   const SizedBox(height: 25,),
                   DetailTile(title: 'Official language', value: _controller.language!.values.first),
-                  DetailTile(title: 'Ethnic group', value: 'Unknown'),
-                  DetailTile(title: 'Religion', value: 'Unknown'),
-                  DetailTile(title: 'Government', value: 'Unknown'),
+                  const DetailTile(title: 'Ethnic group', value: 'Unknown'),
+                  const DetailTile(title: 'Religion', value: 'Unknown'),
+                  const DetailTile(title: 'Government', value: 'Unknown'),
                   const SizedBox(height: 25,),
                   DetailTile(title: 'Independent', value: _controller.independence.toString()),
                   DetailTile(title: 'Area', value: '${_controller.area}km'),
                   DetailTile(title: 'Currency', value: _controller.currency!.values.first['name']),
+                  const DetailTile(title: 'GDP', value: 'Unknown'),
                   const SizedBox(height: 25,),
                   DetailTile(title: 'Time zone', value: _controller.timeZone![0]),
+                  const DetailTile(title: 'Date format', value: 'Unknown'),
                   DetailTile(title: 'Dialing code', value: '${_controller.callingCodeRoot}${_controller.callingCodeSuffix![0]}'),
                   DetailTile(title: 'Driving Side', value: _controller.drivingSide!.capitalizeFirst!)
                 ],

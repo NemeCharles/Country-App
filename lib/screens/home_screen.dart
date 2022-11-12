@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../ui/components.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -85,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         filled: true,
                         fillColor: const Color(0XFF98A2B3).withOpacity(0.2),
                         hintText: 'Search Country',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                             fontSize: 21,
                             fontWeight: FontWeight.w300
                         ),
@@ -221,7 +220,7 @@ class _LanguageListState extends State<LanguageList> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Languages',
                 style: TextStyle(
                     fontSize: 20,
@@ -235,17 +234,17 @@ class _LanguageListState extends State<LanguageList> {
                 child: Container(
                     height: 20,
                     width: 20,
-                    margin: EdgeInsets.only(right: 11),
+                    margin: const EdgeInsets.only(right: 11),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: const Color(0XFF98A2B3)
                     ),
-                    child: Center(child: FaIcon(FontAwesomeIcons.x, size: 12,))
+                    child: const Center(child: FaIcon(FontAwesomeIcons.x, size: 12,))
                 ),
               )
             ],
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Flexible(
             child: ListView.builder(
               itemCount: languages.length,
@@ -257,7 +256,7 @@ class _LanguageListState extends State<LanguageList> {
                     children: [
                       Text(
                         languages[index],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),
@@ -267,7 +266,6 @@ class _LanguageListState extends State<LanguageList> {
                         onChanged: (value) {
                           setState(() {
                             selectedValue = value!;
-                            print(value);
                           });
                         },
                       )
@@ -290,225 +288,134 @@ class FilterBottomSheet extends StatefulWidget {
   State<FilterBottomSheet> createState() => _FilterBottomSheetState();
 }
 
-class Items {
-  String? region;
-  Widget? text;
-  Items(this.text, this.region);
-}
-List<String> continents = [
-  'Africa',
-  'Antarctica',
-  'Asia',
-  'Australia',
-  'Europe',
-  'North America',
-  'South America'
-];
-List<String> timeZones = [
-  'GMT+1:00',
-  'GMT+2:00',
-  'GMT+3:00',
-  'GMT+4:00',
-  'GMT+5:00',
-  'GMT+6:00',
-  'GMT+7:00',
-  'GMT-6:00',
-  'GMT-5:00',
-  'GMT-4:00',
-  'GMT-3:00',
-  'GMT-2:00',
-  'GMT-1:00',
-];
-List<Items> items = [
-  Items(
-      ListView.builder(
-        itemCount: continents.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 16),
-            child: Container(
-              // width: 270,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    continents[index],
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w300
-                    ),
-                  ),
-                  // Text('data')
-                  Checkbox(
-                    value: false,
-                    onChanged: null,
-                    fillColor: MaterialStateProperty.all<Color>(Colors.white),
-                    checkColor: Color(0XFF000F24),
-                  )
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-      'Continents'
-  ),
-  Items(
-      ListView.builder(
-        itemCount: timeZones.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 16),
-            child: Container(
-              // width: 270,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    timeZones[index],
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  // Text('data')
-                  Checkbox(
-                    value: false,
-                    onChanged: null,
-                  )
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-      'Time zones'
-  ),
-];
-
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
+  final CountryController _controller = Get.find();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: Get.isDarkMode ? const Color(0XFF000F24) : const Color(0XFFE5E5E5),
-          borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(20),
-              topLeft: Radius.circular(20)
-          )
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20, right: 18, left: 18),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Filter',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700
+    return GetBuilder<CountryController>(builder: (_) {
+      return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: Get.isDarkMode ? const Color(0XFF000F24) : const Color(0XFFE5E5E5),
+            borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(20),
+                topLeft: Radius.circular(20)
+            )
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20, right: 18, left: 18),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Filter',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700
+                    ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                      height: 17,
-                      width: 17,
-                      margin: const EdgeInsets.only(right: 11),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: const Color(0XFF98A2B3)
-                      ),
-                      child: Center(child: const FaIcon(FontAwesomeIcons.x, size: 10,))
-                  ),
-                )
-              ],
-            ),
-          ),
-          ExpansionPanelList.radio(
-            expandedHeaderPadding: EdgeInsets.zero,
-            elevation: 0,
-            dividerColor: Colors.transparent,
-            children: items.map((item) => ExpansionPanelRadio(
-              backgroundColor: context.theme.backgroundColor,
-              headerBuilder: (context, isExpanded) => Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      item.region!,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        height: 17,
+                        width: 17,
+                        margin: const EdgeInsets.only(right: 11),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: const Color(0XFF98A2B3)
                         ),
-                      ),
-                  ],
-                ),
+                        child: Center(child: const FaIcon(FontAwesomeIcons.x, size: 10,))
+                    ),
+                  )
+                ],
               ),
-              body: SizedBox(child: item.text!, height: 350),
-              value: item.region!,
-            )).toList(),
-          ),
-          // SizedBox(height: 7,),
-          Padding(
-            padding: const EdgeInsets.only(left: 18, right: 25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: null,
-                  child: const Text(
-                      'Reset',
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.white
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 0.8, color: Color(0XFFA9BBD4))),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)
-                      )
-                    ),
-                    minimumSize: MaterialStateProperty.all<Size>(const Size(85, 40))
-                  ),
-                ),
-                TextButton(
-                  onPressed: null,
-                  child: const Text(
-                      'Reset',
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.white
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 0.8, color: Color(0XFFFF6C00))),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)
-                      )
-                    ),
-                    minimumSize: MaterialStateProperty.all<Size>(const Size(170, 40)),
-                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0XFFFF6C00))
-                  ),
-                ),
-              ],
             ),
-          ),
-          SizedBox(height: 17,)
-        ],
-      ),
-    );
+            ExpansionPanelList.radio(
+              expandedHeaderPadding: EdgeInsets.zero,
+              elevation: 0,
+              dividerColor: Colors.transparent,
+              children: items.map((item) => ExpansionPanelRadio(
+                backgroundColor: context.theme.backgroundColor,
+                headerBuilder: (context, isExpanded) => Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        item.region!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                body: SizedBox(child: item.text!, height: 350),
+                value: item.region!,
+              )).toList(),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 18, right: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: null,
+                    child: const Text(
+                        'Reset',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.white
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 0.8, color: Color(0XFFA9BBD4))),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6)
+                        )
+                      ),
+                      minimumSize: MaterialStateProperty.all<Size>(const Size(85, 40))
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      var continents = _controller.continentList.where((continent) => continent.isChecked).map((test) => test.continent).toList();
+                      print(continents);
+                    },
+                    child: const Text(
+                        'Reset',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.white
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 0.8, color: Color(0XFFFF6C00))),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)
+                        )
+                      ),
+                      minimumSize: MaterialStateProperty.all<Size>(const Size(170, 40)),
+                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0XFFFF6C00))
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 17,)
+          ],
+        ),
+      );
+    });
+
   }
 }
-
 

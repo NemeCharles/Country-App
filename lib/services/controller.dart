@@ -1,6 +1,7 @@
 import 'package:country_app/model/country_model.dart';
 import 'package:country_app/services/api_service.dart';
 import 'package:get/get.dart';
+import '../model/filter_models.dart';
 
 class CountryController extends GetxController {
   final _countryService = ApiServices();
@@ -8,6 +9,16 @@ class CountryController extends GetxController {
   List<Country> displayList = [];
   bool isLoading = true;
   bool errorOccurred = false;
+  List<ContinentModel> continentList = [
+    ContinentModel(continent: 'Africa'),
+    ContinentModel(continent: 'Antarctica'),
+    ContinentModel(continent: 'Asia'),
+    ContinentModel(continent: 'Australia'),
+    ContinentModel(continent: 'Australia'),
+    ContinentModel(continent: 'Europe'),
+    ContinentModel(continent: 'North America'),
+    ContinentModel(continent: 'South America'),
+  ];
 
   Future<void> callApi() async {
       errorOccurred = false;
@@ -31,8 +42,15 @@ class CountryController extends GetxController {
   }
 
 
+
   void changeBool(bool newValue) {
     isLoading = newValue;
     update();
   }
+
+  void toggleCheckBox(int index, bool? value) {
+    continentList[index].isChecked = value!;
+    update();
+  }
+
 }
