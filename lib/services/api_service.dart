@@ -18,6 +18,6 @@ class ApiServices {
         }
       }
       return _countryList;
-    } else{ throw Exception('Unable to load the stuff');}
+    } else{ throw Exception('Unable to load');}
   }
 }
