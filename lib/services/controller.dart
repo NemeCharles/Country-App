@@ -70,6 +70,7 @@ class CountryController extends GetxController {
     FilterModel(filterText: 'Europe'),
     FilterModel(filterText: 'Oceania'),
   ];
+
   List<FilterModel> continentList = [
     FilterModel(filterText: 'Africa'),
     FilterModel(filterText: 'Antarctica'),
