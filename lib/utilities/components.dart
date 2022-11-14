@@ -1,9 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../model/country_model.dart';
+import '../model/filter_models.dart';
 import '../screens/info_screen.dart';
-import '../services/controller.dart';
+import 'filter_categories.dart';
 
+// List of filter categories
+List<ItemsModel> items = [
+  ItemsModel(
+    title: 'Continents',
+    checkBox: const ContinentFilter(),
+  ),
+  ItemsModel(
+    title: 'Time zones',
+    checkBox: const TimeZone()
+  ),
+  ItemsModel(
+      title: 'Region',
+      checkBox: const RegionFilter()
+  ),
+  ItemsModel(
+      title: 'Subregion',
+      checkBox: const SubregionFilter()
+  )
+];
+
+// Error message to notify users of errors
 class ErrorMessage extends StatelessWidget {
   const ErrorMessage({Key? key, required this.onPressed}) : super(key: key);
 
@@ -36,9 +58,11 @@ class ErrorMessage extends StatelessWidget {
   }
 }
 
-
+// The tile for each country available in the list.
+// Tapping on a tile navigates you to the info screen
 Widget countryTile(List<Country> countryList) {
   return ListView.builder(
+    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       itemCount: countryList.length,
       itemBuilder: (context, index) {
         return Padding(
@@ -97,7 +121,6 @@ Widget countryTile(List<Country> countryList) {
       });
 }
 
-
 class DetailTile extends StatelessWidget {
   const DetailTile({
     Key? key, required this.title, required this.value,
@@ -134,113 +157,6 @@ class DetailTile extends StatelessWidget {
   }
 }
 
-
-class Items {
-  String? region;
-  Widget? text;
-  Items(this.text, this.region);
-}
-
-
-List<Items> items = [
-  Items(
-      ContinentFilter(),
-      'Continents'
-  ),
-  Items(
-      ListView.builder(
-        itemCount: timeZones.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 16),
-            child: Container(
-              // width: 270,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    timeZones[index],
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  // Text('data')
-                  const Checkbox(
-                    value: false,
-                    onChanged: null,
-                  )
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-      'Time zones'
-  ),
-];
-
-
-class ContinentFilter extends StatelessWidget {
-  const ContinentFilter({
-    Key? key,
-  }) : super(key: key);
-
-
-  @override
-  Widget build(BuildContext context) {
-    final CountryController _controller = Get.find();
-    return GetBuilder<CountryController>(builder: (_){
-      return ListView.builder(
-        itemCount: _controller.continentList.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 16),
-            child: Container(
-              // width: 270,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    _controller.continentList[index].continent!,
-                    style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w300
-                    ),
-                  ),
-                  Checkbox(
-                    value: _controller.continentList[index].isChecked,
-                    onChanged: (bool? value) {
-                      _controller.toggleCheckBox(index, value!);
-                    },
-                  )
-                ],
-              ),
-            ),
-          );
-        },
-      );
-    });
-
-  }
-}
-
-
-List<String> timeZones = [
-  'GMT+1:00',
-  'GMT+2:00',
-  'GMT+3:00',
-  'GMT+4:00',
-  'GMT+5:00',
-  'GMT+6:00',
-  'GMT+7:00',
-  'GMT-6:00',
-  'GMT-5:00',
-  'GMT-4:00',
-  'GMT-3:00',
-  'GMT-2:00',
-  'GMT-1:00',
-];
 
 
 
