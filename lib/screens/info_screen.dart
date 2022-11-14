@@ -3,7 +3,7 @@ import 'package:country_app/services/controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../ui/components.dart';
+import '../utilities/components.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({Key? key, required this.index, required this.countryName}) : super(key: key);
@@ -72,7 +72,7 @@ class InfoScreen extends StatelessWidget {
                   DetailTile(title: 'Population', value: _countryController.displayList[index].population.toString()),
                   DetailTile(title: 'Region', value: _controller.region!),
                   DetailTile(title: 'Capital', value: _controller.capital![0]),
-                  const DetailTile(title: 'Motto', value: 'Unknown'),
+                  DetailTile(title: 'Sub region', value: _controller.subregion!),
                   const SizedBox(height: 25,),
                   DetailTile(title: 'Official language', value: _controller.language!.values.first),
                   const DetailTile(title: 'Ethnic group', value: 'Unknown'),
