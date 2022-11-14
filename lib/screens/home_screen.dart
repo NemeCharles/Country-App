@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../ui/components.dart';
+import '../utilities/components.dart';
+import '../utilities/language_selector.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final CountryController _countryController = Get.put(CountryController());
+  final TextEditingController textController = TextEditingController();
   final countryLoad = ApiServices();
 
   @override
@@ -71,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 50,
                     child: TextField(
+                      controller: textController,
                       onChanged: (value) {
                         _countryController.searchCountry(value);
                       },
@@ -97,6 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderSide: BorderSide.none
                         ),
                         prefixIcon: const Icon(Icons.search_rounded, size: 25,),
+                        suffixIcon: textController.text.isNotEmpty ?
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  textController.clear();
+                                });
+                              },
+                              child: const Icon(Icons.close, color: Colors.grey,),
+                            ) : null
                       ),
                     ),
                   ),
@@ -187,99 +199,6 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 
-class LanguageList extends StatefulWidget {
-  const LanguageList({Key? key}) : super(key: key);
-
-  @override
-  State<LanguageList> createState() => _LanguageListState();
-}
-List<String> languages = [
-  'English',
-  'Deutsch',
-  'Francais',
-  'Español',
-  'Italiano',
-  'portuguese',
-  'Svenska'
-];
-class _LanguageListState extends State<LanguageList> {
-  int selectedValue = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 20, right: 18, left: 18),
-      decoration: BoxDecoration(
-          color: Get.isDarkMode ? const Color(0XFF000F24) : const Color(0XFFE5E5E5),
-          borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(20),
-              topLeft: Radius.circular(20)
-          )
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Languages',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                    height: 20,
-                    width: 20,
-                    margin: const EdgeInsets.only(right: 11),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: const Color(0XFF98A2B3)
-                    ),
-                    child: const Center(child: FaIcon(FontAwesomeIcons.x, size: 12,))
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 10,),
-          Flexible(
-            child: ListView.builder(
-              itemCount: languages.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        languages[index],
-                        style: const TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                      Radio<int>(
-                        value: index,
-                        groupValue: selectedValue,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedValue = value!;
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({Key? key}) : super(key: key);
@@ -347,7 +266,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        item.region!,
+                        item.title!,
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 18
@@ -356,8 +275,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     ],
                   ),
                 ),
-                body: SizedBox(child: item.text!, height: 350),
-                value: item.region!,
+                body: SizedBox(child: item.checkBox!, height: 350),
+                value: item.title!,
               )).toList(),
             ),
             Padding(
@@ -368,7 +287,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   TextButton(
                     onPressed: () {
                       _controller.resetFilter();
-                      Navigator.pop(context);
+                      // Navigator.pop(context);
                     },
                     child: const Text(
                         'Reset',
@@ -388,11 +307,21 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     ),
                   ),
                   TextButton(
+                    // function for filtering
                     onPressed: () {
-                      if(_controller.continentList.any((element) => element.isChecked == true)) {
+                      if(_controller.continentList.any((element) => element.isChecked == true) ||
+                          _controller.regionList.any((element) => element.isChecked == true ||
+                          _controller.subregionList.any((element) => element.isChecked == true ||
+                          _controller.timeZoneList.any((element) => element.isChecked = true)))) {
                         var continents = _controller.continentList.where((continent) =>
-                        continent.isChecked).map((test) => test.continent).toList();
-                        _controller.testingFilter(continents);
+                        continent.isChecked).map((filteredContinents) => filteredContinents.filterText).toList();
+                        var selectedRegion = _controller.regionList.where((region) =>
+                        region.isChecked).map((filteredRRegion) => filteredRRegion.filterText).toList();
+                        var selectedSubregion = _controller.subregionList.where((subregion) =>
+                        subregion.isChecked).map((filteredSubregion) => filteredSubregion.filterText).toList();
+                        var selectedTimeZone = _controller.timeZoneList.where((timeZone) =>
+                        timeZone.isChecked).map((filteredTimeZone) => filteredTimeZone.filterText).toList();
+                        _controller.filterList(continents, selectedRegion, selectedSubregion, selectedTimeZone);
                         Navigator.pop(context);
                       }else{
                         print('No continent selected');
